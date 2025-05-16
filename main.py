@@ -2,8 +2,8 @@ import pygame
 import random
 pygame.init()
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 1024
+SCREEN_HEIGHT = 720
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 pygame.display.set_caption("Tir Game")
@@ -22,7 +22,18 @@ color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
 runnig = True
 while runnig:
-    pass
+    screen.fill(color)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            runnig = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            if target_x < mouse_x < target_x + target_width and target_y < mouse_y < target_y + target_height:
+                target_x = random.randint(0, SCREEN_WIDTH - target_width)
+                target_y = random.randint(0, SCREEN_HEIGHT - target_height)
+    scaled_target = pygame.transform.scale(target_img, (100, 100))
+    screen.blit(scaled_target, (target_x, target_y))
+    pygame.display.update()
 
 
 
